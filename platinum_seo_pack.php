@@ -1422,8 +1422,8 @@ class Platinum_SEO_Pack {
 		}
 		//add_management_page(__('Platinum SEO Title', 'platinum_seo_pack'), __('Platinum SEO', 'platinum_seo_pack'), 10, $file, array($this, 'management_panel'));
 		//add_submenu_page('options-general.php', __('Platinum SEO', 'platinum_seo_pack'), __('Platinum SEO', 'platinum_seo_pack'), 10, $file, array($this, 'options_panel'));
-		add_menu_page(__('Platinum SEO', 'platinum_seo_pack'), __('Platinum SEO', 'platinum_seo_pack'), 10, $file, array($this, 'options_panel'));
-		add_submenu_page($file, __('Migrate from All in one SEO', 'platinum_seo_pack'), __('Migrate from All in one SEO', 'platinum_seo_pack'), 10, $filem);
+		add_menu_page(__('Platinum SEO', 'platinum_seo_pack'), __('Platinum SEO', 'platinum_seo_pack'), 'manage_options', $file, array($this, 'options_panel'));
+		add_submenu_page($file, __('Migrate from All in one SEO', 'platinum_seo_pack'), __('Migrate from All in one SEO', 'platinum_seo_pack'), 'manage_options', $filem);
 		if( function_exists( 'add_meta_box' )) {
 			if ( function_exists( 'get_post_types' ) ) {
 				$post_types = get_post_types( array(), 'objects' );
@@ -1475,7 +1475,7 @@ class Platinum_SEO_Pack {
 		$message_updated = __("Platinum SEO Options Updated.", 'platinum_seo_pack');
 
 		// update options
-		if ($_POST['action'] && $_POST['action'] == 'psp_update') {
+		if (isset($_POST['action']) && $_POST['action'] == 'psp_update') {
 			$nonce = $_POST['psp-options-nonce'];
 			if (!wp_verify_nonce($nonce, 'psp-options-nonce')) die ( 'Security Check - If you receive this in error, log out and back in to WordPress');
 			$message = $message_updated;
@@ -1526,7 +1526,7 @@ class Platinum_SEO_Pack {
 			if (function_exists('wp_cache_flush')) {
 				wp_cache_flush();
 			}
-		} elseif ($_POST['psp_upgrade']) {
+		} elseif (isset($_POST['psp_upgrade'])) {
 			$message = __("Upgraded to newest version. Please revisit the options page to ensure you see the newest version.", 'platinum_seo_pack');
 			$success = $this->install_newest_version();
 			if (!$success) {
